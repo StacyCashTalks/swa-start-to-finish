@@ -1,0 +1,69 @@
+﻿@if (_editMode)
+{
+    <div>
+        <input type="text" 
+               class="edit-label" 
+               @bind="_editLabel" 
+               @onkeyup="HandleKeyUp" />
+        <span class="pointer" @onclick="ToggleEditMode">&#128190;</span>
+    </div>
+}
+else
+{
+    <label class="container">
+        <span class="@(Todo.Complete ? "complete" : string.Empty)">@Todo.Label</span>
+        <span @onclick="ToggleEditMode">🖋</span>
+        <input type="checkbox" @onclick="StateChange" checked="@Todo.Complete">
+        <span class="checkmark"></span>
+    </label>
+}
+
+@code {
+    [Parameter]
+    [EditorRequired]
+    public Todo Todo { get; set; }
+    
+    [Parameter]
+    public EventCallback<Todo> OnTodoChanged { get; set; }
+
+    private string _editLabel = string.Empty;
+    private bool _editMode;
+
+    private async Task StateChange()
+    {
+        await OnTodoChanged.InvokeAsync(Todo with { Complete = !Todo.Complete});
+    }
+    
+    private async Task HandleKeyUp(KeyboardEventArgs e)
+    {
+        switch (e.Key)
+        {
+            case "Enter":
+                await ToggleEditMode();
+                break;
+            case "Escape":
+                _editMode = false;
+                break;
+        }
+    }
+
+    private async Task ToggleEditMode()
+    {
+        if (_editMode)
+        {
+            if (string.IsNullOrWhiteSpace(_editLabel))
+            {
+                return;
+            }
+
+            await OnTodoChanged.InvokeAsync(Todo with { Label = _editLabel });
+        }
+        else
+        {
+            _editLabel = Todo.Label;
+        }
+
+        _editMode = !_editMode;
+    }
+}
+

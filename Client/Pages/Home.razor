@@ -1,0 +1,57 @@
+﻿@page "/"
+@inject TodoService TodoService
+
+<PageTitle>Todos</PageTitle>
+
+<h1>Here are your todos!</h1>
+
+@if (TodoService.Todos is null)
+{
+    <div>Loading...</div>
+}
+else
+{
+    <input type="text" @bind="_newTodoLabel" class="edit-label" @onkeyup="OnKeyUp" />
+    <span class="pointer" @onclick="AddTodo">&#128190;</span>
+    foreach (var todo in TodoService.Todos)
+    {
+        
+        <TodoItem Todo="@todo" OnTodoChanged="SaveTodo" />
+        
+    }
+}
+
+@code
+{
+    private string _newTodoLabel = string.Empty;
+    protected override async Task OnInitializedAsync()
+    {
+        await TodoService.LoadTodos();
+    }
+
+    private async Task AddTodo()
+    {
+        if (string.IsNullOrWhiteSpace(_newTodoLabel))
+        {
+            return;
+        }
+
+        await TodoService.AddTodo(_newTodoLabel);
+        _newTodoLabel = string.Empty;
+    }
+
+    private async Task SaveTodo(Todo todo)
+    {
+        await TodoService.UpdateTodo(todo);
+    }
+
+    private async Task OnKeyUp(KeyboardEventArgs e)
+    {
+        switch (e.Key)
+        {
+            case "Enter":
+                await AddTodo();
+                break;
+        }
+    }
+}
