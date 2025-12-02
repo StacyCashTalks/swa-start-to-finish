@@ -7,11 +7,13 @@
     }
   ],
   "navigationFallback": {
-    "rewrite": "index.html",
-    "exclude": [
-      "/images/*.{png,jpg,gif}",
-      "/css/*",
-      "/api/*"
-    ]
+    "rewrite": "/index.html",
+    "exclude": ["/css/*", "/js/*", "/_framework/*", "/images/*", "/*.{png,jpg,gif,ico,svg,css,js,wasm,dll,dat,json}"]
+  },
+  "mimeTypes": {
+    ".dll": "application/octet-stream",
+    ".wasm": "application/wasm",
+    ".dat": "application/octet-stream",
+    ".json": "application/json"
   }
 }
