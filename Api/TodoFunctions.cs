@@ -35,8 +35,7 @@ public class TodoFunctions(TodoService todoService)
             return new UnauthorizedResult();
         }
 
-        using var reader = new StreamReader(req.Body);
-        var label = await reader.ReadToEndAsync();
+        var label = await JsonSerializer.DeserializeAsync<string>(req.Body, _jsonOptions);
 
         if (string.IsNullOrWhiteSpace(label))
         {
