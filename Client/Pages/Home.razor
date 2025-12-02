@@ -11,12 +11,15 @@
 }
 else
 {
-    <input type="text" @bind="_newTodoLabel" class="edit-label" @onkeyup="OnKeyUp" />
-    <span class="pointer" @onclick="AddTodo">&#128190;</span>
+    <label class="container">
+        <span class="checkmark" aria-hidden="true"></span>
+        <input type="text" @bind="_newTodoLabel" class="edit-label" @onkeyup="OnKeyUp" placeholder="Add a todo..." />
+        <span class="pointer" @onclick="AddTodo">&#128190;</span>
+    </label>
     foreach (var todo in TodoService.Todos)
     {
         
-        <TodoItem Todo="@todo" OnTodoChanged="SaveTodo" />
+        <TodoItem Todo="@todo" OnTodoChanged="SaveTodo" OnTodoDeleted="DeleteTodo" />
         
     }
 }
@@ -53,5 +56,10 @@ else
                 await AddTodo();
                 break;
         }
+    }
+
+    private async Task DeleteTodo(Guid todoId)
+    {
+        await TodoService.DeleteTodo(todoId);
     }
 }

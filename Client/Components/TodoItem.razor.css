@@ -1,75 +1,125 @@
-﻿
-/* Customize the label (the container) */
+﻿/* Container uses flex layout: checkbox | label/input | actions */
 .container {
-    display: block;
-    position: relative;
-    padding-left: 35px;
-    margin-left: 0;
-    margin-top: 10px;
-    /*margin-bottom: 12px;*/
-    cursor: pointer;
-    font-size: 22px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    top:13px
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 8px;
+    margin: 8px 0;
+    background: transparent;
+    border-radius: 6px;
+    font-size: 16px;
 }
 
-    /* Hide the browser's default checkbox */
-    .container input {
-        position: absolute;
-        opacity: 0;
-        cursor: pointer;
-        height: 0;
-        width: 0;
+/* Checkbox (native is invisible but sized for a11y) */
+.container input[type="checkbox"] {
+    opacity: 0;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    flex: 0 0 20px;
+    cursor: pointer;
+}
+
+/* Visual checkmark */
+.checkmark {
+    width: 20px;
+    height: 20px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: inline-block;
+    flex: 0 0 20px;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.02);
+}
+
+.container input[type="checkbox"]:checked ~ .checkmark {
+    background: #2b8dfc;
+    border-color: #1f6fe8;
+}
+
+.container input[type="checkbox"]:checked ~ .checkmark:after {
+    content: "";
+    position: relative;
+    left: 5px;
+    top: 1px;
+    width: 4px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    display: inline-block;
+}
+
+/* Label text area */
+.label-text {
+    flex: 1 1 auto;
+    min-width: 0; /* allow ellipsis */
+    color: #222;
+}
+
+.label-text.complete {
+    color: #777;
+    text-decoration: line-through;
+}
+
+/* Edit input inside container */
+.container input.edit-label {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 8px 10px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Actions group */
+.actions {
+    display: flex;
+    gap: 6px;
+    flex: 0 0 auto;
+}
+
+/* Small icon buttons */
+.icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+.icon-btn:hover {
+    background: rgba(0,0,0,0.03);
+}
+
+.icon-btn:active {
+    transform: translateY(1px);
+}
+
+.icon-btn.delete {
+    color: #d9534f; /* red */
+}
+
+.icon-btn.save {
+    color: #2b8dfc; /* blue */
+}
+
+.icon-btn.edit {
+    color: #333;
+}
+
+/* Make layout responsive: wrap actions under long labels */
+@media (max-width: 420px) {
+    .container {
+        gap: 8px;
+        font-size: 14px;
     }
 
-/* Create a custom checkbox */
-.checkmark {
-    position: absolute;
-    top: 5px;
-    left: 0;
-    height: 25px;
-    width: 25px;
-    background-color: #eee;
-}
-
-/* On mouse-over, add a grey background color */
-.container:hover input ~ .checkmark {
-    background-color: #ccc;
-}
-
-/* When the checkbox is checked, add a blue background */
-.container input:checked ~ .checkmark {
-    background-color: #2196F3;
-}
-
-/* Create the checkmark/indicator (hidden when not checked) */
-.checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-}
-
-/* Show the checkmark when checked */
-.container input:checked ~ .checkmark:after {
-    display: block;
-}
-
-/* Style the checkmark/indicator */
-.container .checkmark:after {
-    left: 9px;
-    top: 5px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-}
-
-.complete {
-    text-decoration: line-through;
+    .icon-btn { width: 28px; height: 28px; }
 }

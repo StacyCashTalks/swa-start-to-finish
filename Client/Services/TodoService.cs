@@ -69,6 +69,28 @@ public class TodoService(HttpClient httpClient, AuthenticationStateProvider auth
         _todos[index] = todo;
     }
 
+    public async Task DeleteTodo(Guid todoId)
+    {
+        if (_todos is null)
+        {
+            return;
+        }
+        
+        var index = _todos.FindIndex(t => t.Id == todoId);
+        if (index == -1)
+        {
+            return;
+        }
+
+        if (await IsAuthenticated())
+        {
+            var result = await httpClient.DeleteAsync($"api/todos/{todoId}");
+            result.EnsureSuccessStatusCode();
+        }
+        
+        _todos.RemoveAt(index);
+    }
+
     private async Task<bool> IsAuthenticated()
     {
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();

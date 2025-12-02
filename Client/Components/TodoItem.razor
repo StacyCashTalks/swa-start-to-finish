@@ -1,20 +1,28 @@
 ﻿@if (_editMode)
 {
-    <div>
+    <label class="container">
+        <input type="checkbox" @onclick="StateChange" checked="@Todo.Complete" aria-label="Toggle complete" />
+        <span class="checkmark" aria-hidden="true"></span>
         <input type="text" 
                class="edit-label" 
                @bind="_editLabel" 
                @onkeyup="HandleKeyUp" />
-        <span class="pointer" @onclick="ToggleEditMode">&#128190;</span>
-    </div>
+        <div class="actions">
+            <button type="button" class="icon-btn save" @onclick="ToggleEditMode" @onclick:stopPropagation title="Save">💾</button>
+            <button type="button" class="icon-btn delete" @onclick="RemoveTodo" @onclick:stopPropagation title="Delete">✖</button>
+        </div>
+    </label>
 }
 else
 {
     <label class="container">
-        <span class="@(Todo.Complete ? "complete" : string.Empty)">@Todo.Label</span>
-        <span @onclick="ToggleEditMode">🖋</span>
-        <input type="checkbox" @onclick="StateChange" checked="@Todo.Complete">
-        <span class="checkmark"></span>
+        <input type="checkbox" @onclick="StateChange" checked="@Todo.Complete" aria-label="Toggle complete" />
+        <span class="checkmark" aria-hidden="true"></span>
+        <div class="label-text @(Todo.Complete ? "complete" : string.Empty)">@Todo.Label</div>
+        <div class="actions">
+            <button type="button" class="icon-btn edit" @onclick="ToggleEditMode" @onclick:stopPropagation title="Edit">🖋</button>
+            <button type="button" class="icon-btn delete" @onclick="RemoveTodo" @onclick:stopPropagation title="Delete">✖</button>
+        </div>
     </label>
 }
 
@@ -24,7 +32,12 @@ else
     public Todo Todo { get; set; }
     
     [Parameter]
+    [EditorRequired]
     public EventCallback<Todo> OnTodoChanged { get; set; }
+    
+    [Parameter]
+    [EditorRequired]
+    public EventCallback<Guid> OnTodoDeleted { get; set; }
 
     private string _editLabel = string.Empty;
     private bool _editMode;
@@ -65,5 +78,9 @@ else
 
         _editMode = !_editMode;
     }
+    
+    private async Task RemoveTodo()
+    {
+        await OnTodoDeleted.InvokeAsync(Todo.Id);
+    }
 }
-
