@@ -1,0 +1,63 @@
+/* Styles for the create row in Home.razor (component-scoped)
+   This duplicates the minimal .icon-btn rules used by TodoItem so the add button
+   in Home gets the same appearance. */
+
+/* Keep same layout modifier */
+.container.create-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 8px;
+    margin: 8px 0;
+    background: transparent;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+/* Visual placeholder square (non-interactive) */
+.container.create-row .checkmark {
+    width: 20px;
+    height: 20px;
+    background: transparent;
+    border: 1px dashed rgba(0,0,0,0.06);
+    border-radius: 4px;
+    display: inline-block;
+    flex: 0 0 20px;
+    box-shadow: none;
+}
+
+/* Make the add button look like the other icon buttons */
+.icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+.icon-btn:hover {
+    background: rgba(0,0,0,0.03);
+}
+
+.icon-btn:active {
+    transform: translateY(1px);
+}
+
+.icon-btn.add {
+    color: #2b8dfc;
+}
+
+.container.create-row input.edit-label {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 8px 10px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+

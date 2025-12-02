@@ -114,6 +114,26 @@
     color: #333;
 }
 
+/* Create-row variant: visually match item rows but without an interactive checkbox */
+.container.create-row {
+    /* keep same layout; scoped modifier if we need tweaks later */
+}
+
+.container.create-row .checkmark {
+    /* keep the alignment square but make it visually lighter so it doesn't read as a checkbox */
+    background: transparent;
+    border: 1px dashed rgba(0,0,0,0.06);
+    box-shadow: none;
+}
+
+.container.create-row .icon-btn.add {
+    color: #2b8dfc; /* match save/add primary color */
+}
+
+.container.create-row input.edit-label {
+    padding: 8px 10px;
+}
+
 /* Make layout responsive: wrap actions under long labels */
 @media (max-width: 420px) {
     .container {

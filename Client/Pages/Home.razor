@@ -11,10 +11,10 @@
 }
 else
 {
-    <label class="container">
+    <label class="container create-row">
         <span class="checkmark" aria-hidden="true"></span>
         <input type="text" @bind="_newTodoLabel" class="edit-label" @onkeyup="OnKeyUp" placeholder="Add a todo..." />
-        <span class="pointer" @onclick="AddTodo">&#128190;</span>
+        <button type="button" class="icon-btn add" @onclick="AddTodo" title="Add">💾</button>
     </label>
     foreach (var todo in TodoService.Todos)
     {
