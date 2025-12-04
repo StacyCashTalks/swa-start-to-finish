@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     env:   
       DNS_RESOURCE_GROUP: dns-rg  # Replace with your DNS Resource Group
-      DOMAIN: stacy-clouds.com # Replace with your domain name
+      DOMAIN: beginningazurestaticwebapps.com # Replace with your domain name
       SWA_NAME: ${{ vars.SWA_NAME }}
       RESOURCE_GROUP: ${{ vars.RESOURCE_GROUP }}
 
