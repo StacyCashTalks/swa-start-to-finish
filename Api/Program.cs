@@ -7,7 +7,10 @@ using Microsoft.Extensions.Hosting;
 
 var builder = FunctionsApplication.CreateBuilder(args);
 
-builder.Configuration.AddUserSecrets<Program>(); 
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddUserSecrets<Program>();
+}
 builder.ConfigureFunctionsWebApplication();
 
 builder.Services
