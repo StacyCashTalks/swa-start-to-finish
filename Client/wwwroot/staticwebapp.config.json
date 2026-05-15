@@ -1,10 +1,10 @@
 {  
-  "auth": {
     "platform": {
       "apiRuntime": "dotnet:10"
-    },
-    "rolesSource": "/api/GetRoles",
-    "identityProviders": {
+    },  
+    "auth": {
+      "rolesSource": "/api/GetRoles",
+      "identityProviders": {
       "customOpenIdConnectProviders": {
       "mycustomauth": {
         "registration": {
