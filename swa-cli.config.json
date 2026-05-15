@@ -17,7 +17,7 @@
                "apiLocation": "./dist/api",
                "outputLocation": ".",
                "apiLanguage": "dotnetisolated",
-               "apiVersion": "9.0",
+               "apiVersion": "10.0",
                "apiBuildCommand": "dotnet publish -c Release"
         }    
     }
