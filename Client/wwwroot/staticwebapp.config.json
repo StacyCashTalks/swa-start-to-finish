@@ -1,6 +1,6 @@
 {  
     "platform": {
-      "apiRuntime": "dotnet:10"
+      "apiRuntime": "dotnet-isolated:10"
     },  
     "auth": {
       "rolesSource": "/api/GetRoles",
